@@ -1,0 +1,546 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+:root {
+    --color-primary: #1D4977;
+    --color-primary-lighter: #0864c4;
+    --color-red: #ed846f;
+    --color-blue: #6fa0ed;
+    --color-green: #6ee66a;
+    --color-yellow: #FCFBDB;
+    --font-size-normal: 1rem;
+    --font-size-larger: 1.1rem;
+    --font-size-largest: 1.3rem;
+}
+
+body.font-size-normal, body.font-size-normal button {
+    font-size: var(--font-size-normal);
+}
+
+    body.font-size-larger, body.font-size-larger button {
+        font-size: var(--font-size-larger);
+    }
+
+body.font-size-largest, body.font-size-largest button {
+    font-size: var(--font-size-largest);
+}
+
+.yellow {
+    background-color: var(--color-yellow);
+    padding: 5px;
+}
+
+    .yellow a {
+        color: black;
+        font-weight: 400;
+    }
+
+.green {
+    background-color: var(--color-green);
+    padding: 5px;
+}
+
+    .green a {
+        color: black;
+        font-weight: 400;
+    }
+
+.blue {
+    background-color: var(--color-blue);
+    padding: 5px;
+}
+
+    .blue a {
+        color: black;
+        font-weight: 400;
+    }
+
+.red {
+    background-color: var(--color-red);
+    padding: 5px;
+}
+
+    .red a {
+        color: white;
+        font-weight: 400;
+    }
+.font-buttons {
+    background-color: transparent;
+    margin-right: 1.5em;
+}
+    .font-buttons button {
+        border-color: lightgrey;
+        border-style: solid;
+        border-width: 1px;
+        background-color: transparent;
+        border-radius: 10px;
+    }
+    .font-buttons .selected {
+        box-shadow: 1px 1px 15px lightgrey inset;
+    }
+    .font-buttons button:hover {
+        box-shadow: 1px 1px 15px lightgrey inset;
+    }
+    .font-buttons button:focus, .font-buttons button:focus-visible {
+        border-color: lightgrey;
+        border-style: solid;
+        border-width: 1px;
+    }
+
+.container {
+    max-width: 95%;
+}
+
+.row {
+    margin-top: 1.5em;
+    align-items: center;
+}
+
+a.nav-link {
+    color: white;
+}
+
+.nav-link svg {
+    width: 25px;
+    padding: 5px;
+    padding-bottom: 9px;
+    margin-left: 10px;
+    fill: white;
+}
+
+.nav-link:hover {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.nav-item--active a.nav-link {
+    font-weight: 600;
+    text-decoration: underline;
+}
+.instructies-nav-item {
+    border-left-color: white;
+    border-left-width: 1px;
+    border-left-style: solid;
+    padding-left: 10px;
+}
+
+.profiel-nav-link {
+    padding-right: 10px;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    padding-right: 5em;
+    color: white;
+}
+
+.navbar {
+    margin-bottom: 0;
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 0.25rem 0.75rem #c8cdd1;
+}
+
+.navbar-nav {
+    justify-content: flex-end;
+}
+
+.button-outline {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+
+.modal-content {
+    width: 600px !important;
+    margin: 30px auto !important;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+header {
+}
+
+.maincontainer {
+    width: 100%;
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+button {
+    font-size: 1rem;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.todo {
+    background-color: var(--color-yellow);
+    height: 34em;
+    box-shadow: 5px 5px 15px lightgrey;
+}
+
+.title-todo {
+    padding-top: 0.8em;
+    color: var(--color-primary);
+    font-weight: 400;
+    font-size: 2em;
+}
+
+.todo-text {
+    border: none;
+    background-color: var(--color-yellow);
+    resize: none;
+    border-radius: 15px;
+    padding: 1em;
+    width: 90%;
+}
+
+    .todo-text:focus-visible {
+        outline-color: #d4d2a9;
+        box-shadow: 1px 1px 15px #d4d2a9 inset;
+    }
+
+    .todo-text:hover {
+        outline-color: #d4d2a9;
+        box-shadow: 1px 1px 15px #d4d2a9 inset;
+    }
+
+.calendar {
+    height: 34em;
+}
+
+.calendar-title {
+    text-align: left;
+    padding-left: 1em;
+    font-size: 2em;
+    color: var(--color-primary);
+}
+
+.calendar-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+}
+
+    .calendar-buttons .weekbutton {
+        border: 1px solid grey;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        padding: 4px 15px;
+        font-style: italic;
+        color: grey;
+        background-color: white;
+    }
+
+        .calendar-buttons .weekbutton:active, .weekbutton:focus, .weekbutton.pressed {
+            border: 1px solid grey;
+            color: var(--color-primary);
+            font-weight: 600;
+            outline: none;
+        }
+
+    .calendar-buttons .dagbutton {
+        border: 1px solid grey;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding: 4px 15px;
+        font-style: italic;
+        color: grey;
+        background-color: white;
+    }
+
+    .calendar-buttons .weekbutton:active, .dagbutton:focus, .dagbutton.pressed {
+        border: 1px solid grey;
+        color: var(--color-primary);
+        font-weight: 600;
+        outline: none;
+    }
+
+.alert {
+
+}
+
+a.addbtn {
+    color: white;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background-color: var(--color-primary);
+    border-radius: 15px;
+    padding: 8px 15px 8px 12px;
+}
+
+    a.addbtn:hover {
+        background-color: var(--color-primary-lighter);
+        text-decoration: none;
+        transition: 0.5s all ease;
+    }
+.uitlogknop {
+    color: white;
+    margin-left: 1.5em;
+    margin-right: 0.5em;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background-color: var(--color-primary);
+    border-radius: 15px;
+    padding: 8px 12px 8px 12px;
+    border: none;
+}
+button.uitlogknop:hover {
+    background-color: var(--color-primary-lighter);
+    text-decoration: none;
+    transition: 0.5s all ease;
+}
+
+.weekgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.dagkolom {
+    border: 1px solid lightgrey;
+    box-shadow: 5px 5px 15px lightgrey;
+    border-radius: 10px;
+    height: 400px;
+}
+
+.dag {
+    border-bottom: 1px solid lightgrey;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-style: italic;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+/* modal */
+.modal {
+    top: 12%;
+}
+
+.modal-body {
+    padding-left: 2.5rem;
+}
+
+h2.algemeenForm {
+    font-size: 1.6em;
+    color: var(--color-primary);
+    text-align: left;
+}
+
+.form-group.modal-body.container {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0 1em 0;
+    padding: 1em 0 0 0;
+    grid-gap: 1em;
+}
+
+.name-color {
+    display: flex;
+    justify-content: space-between;
+}
+.name-color label {
+    margin-bottom: 0;
+}
+.kleurlabel {
+    margin-right: 1.4em; 
+}
+
+.colorselect {
+    width: 30%;
+    font-size: 1em;
+}
+
+input#Naam {
+    width: 60%;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding-left: 1em;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.dates-label {
+    text-align: left;
+    padding-left: 0;
+    margin-left: 0;
+    float: left;
+    margin-right: 1em;
+}
+
+.dates-dates {
+    display: flex;
+    height: 8em;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: flex-start;
+    grid-column-gap: 3em;
+}
+
+.doel-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-danger {
+    background-color: #CC0000;
+    border-color: #CC0000;
+}
+
+.btn-success {
+    background-color: #008800;
+    border-color: #008800;
+}
+    .btn-success:hover {
+        background-color: #15b015;
+        border-color: #15b015;
+    }
+
+/*login*/
+#login {
+    width: 50%;
+    margin: auto;
+    padding: 1em;
+    padding-top: 4em;
+}
+
+#account {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1em;
+}
+
+#login h3 {
+    color: var(--color-primary);
+    text-align: left;
+}
+
+.loginknop {
+    align-self: center;
+    margin-top: 2em;
+}
+
+.text-danger ul {
+    list-style: none;
+    text-align: left;
+    padding-left: 0;
+}
+
+/*instructies*/
+.instructies {
+    width: 65%;
+    margin: auto;
+    padding: 1em;
+    padding-top: 4em;
+}
+
+    .instructies h1 {
+        color: var(--color-primary);
+        text-align: left;
+    }
+.instructies-form {
+    width: 100%;
+}
+.font-buttons-instructies {
+    text-align: right;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    padding: 0.7em;
+    padding-left: 0;
+}
+
+tr {
+    border-bottom: solid;
+    border-bottom-color: lightgrey;
+    border-bottom-width: 0.8px;
+}
+
+.account-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 1em;
+    margin-top: 5em;
+}
+.account-title {
+    border-bottom-color: lightgray;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}

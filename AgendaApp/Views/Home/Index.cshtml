@@ -1,0 +1,161 @@
+﻿@using AgendaApp.Data.Repositories
+@using AgendaApp.Controllers
+@inject AgendaAppContext context
+@inject HomeController home
+@{
+    ViewData["Title"] = "Homepagina";
+
+}
+
+<div class="text-center">
+    <div class="d-flex">
+        <div class="col-3 todo">
+            <h1 class="title-todo">Te doen:</h1>
+            <textarea id="todo" class="todo-text" rows="15" name="text" onchange="setText()" title="Voeg taakjes toe"></textarea>
+
+        </div>
+        <div class="col-9 calendar">
+            <div class="row">
+                <div class="col-4">
+                    <p class="calendar-title" title="Toon weekoverzicht" id="weektitel">Wekelijkse doelen</p>
+                    <p class="calendar-title" title="Toon dagoverzicht" id="dagtitel" style="display: none;">Dagelijkse doelen</p>
+                </div>
+                <div class="col-8 calendar-buttons">
+                    <div class="font-buttons">
+                        <button id="font-normal" title="Kleine tekst" style="font-size:1rem" onclick="updateFont('font-size-normal', 'font-normal')">A</button>
+                        <button id="font-larger" title="Normale tekst" style="font-size:1.5rem" class="font-size-normal" onclick="updateFont('font-size-larger', 'font-larger')">A</button>
+                        <button id="font-largest" title="Grote tekst" style="font-size:2rem" class="font-size-normal" onclick="updateFont('font-size-largest', 'font-largest')">A</button>
+                    </div>
+                    <button id="weekbutton" class="weekbutton" onclick="SelectWeekButton()">Week</button>
+                    <button id="dagbutton" class="dagbutton" onclick="SelectDayButton()">Dag</button>
+                    @*<a id="btnShowModal" class="addbtn" asp-area="" asp-action="ViewCreateDoel" asp-controller="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z" /></svg></a>*@
+                    @Html.ActionLink("+ Nieuw doel", "ViewCreateDoel", "Home",
+                    null, new { @class = "modal-link addbtn", @title = "Voeg nieuw doel toe" })
+                    <div class="modal" id="modal-container" role="dialog" tabindex="-1">
+                        <div class="modal-content">
+                            <partial name="CreateDoel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="modal-container-edit" role="dialog" tabindex="-1">
+                <div class="modal-content">
+                    @* <partial name="EditDoel" />*@
+                </div>
+            </div>
+            
+            <div id="weekpartial">
+                <partial name="Weekpartial">
+
+            </div>
+            <div id="dagpartial" style="display: none;">
+                <partial name="Dagpartial">
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            window.onload = $('#weekbutton').addClass("pressed");
+            var id = localStorage.fontId;
+            if (id == null) {
+                window.onload = $('#font-normal').addClass("selected");
+            } else {
+                window.onload = $(`#${id}`).addClass("selected");
+            }
+            window.onload = $(`#${id}`).addClass("selected");
+            window.onload = $('body').addClass(localStorage.bodyClass);
+            if ($("#todo").val().match("")) {
+                $("#todo").val(localStorage.text);
+            }
+        });
+        function SelectWeekButton() {
+            var dagpartial = document.getElementById('dagpartial');
+            dagpartial.style.display = "none";
+            var weekpartial = document.getElementById('weekpartial');
+            weekpartial.style.display = "block";
+            document.getElementById('weektitel').style.display = "inline-block";
+            document.getElementById('dagtitel').style.display = "none";
+            $('#weekbutton').addClass("pressed");
+            $('#dagbutton').removeClass("pressed")
+        }
+        function SelectDayButton() {
+            var dpartial = document.getElementById('dagpartial');
+            dpartial.style.display = "block";
+            var wpartial = document.getElementById('weekpartial');
+            wpartial.style.display = "none";
+            document.getElementById('dagtitel').style.display = "inline-block";
+            document.getElementById('weektitel').style.display = "none";
+            $('#dagbutton').addClass("pressed");
+            $('#weekbutton').removeClass("pressed");
+        }
+        function updateFont(name, id) {
+            $('body').removeClass('font-size-larger font-size-normal font-size-largest');
+            $('body').addClass(name);
+            $('button').removeClass("selected");
+            localStorage.bodyClass = name;
+            localStorage.fontId = id;
+            $(`#${id}`).addClass("selected");
+        }
+        $(function () {
+            $('body').on('click', '.modal-link', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-container');
+                $(this).attr('data-toggle', 'modal');
+            });
+            $('body').on('click', '.modal-link-edit', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-container-edit');
+                $(this).attr('data-toggle', 'modal');
+            });
+            $('#modal-container').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+            $('#modal-container-edit').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+            $('#approve-btn').click(function () {
+                $('#modal-container').modal('hide');
+            });
+            $('#approve-edit-btn').click(function () {
+                $('#modal-container-edit').modal('hide');
+            });
+            $('#terugbutton').click(function () {
+                $('#modal-container').modal('hide');
+            });
+            $('#terugbutton-edit').click(function () {
+                $('#modal-container-edit').modal('hide');
+            });
+            $('#delete-btn').click(function () {
+                $('#modal-container-edit').modal('hide');
+            });
+            $('#modal-container').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var url = button.attr("href");
+                var modal = $(this);
+
+                // note that this will replace the content of modal-content ever time the modal is opened
+                modal.find('.modal-content').load(url);
+            });
+            $('#modal-container-edit').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var url = button.attr("href");
+                var modal = $(this);
+
+                // note that this will replace the content of modal-content ever time the modal is opened
+                modal.find('.modal-content').load(url);
+            });
+
+        });
+        function setText() {
+            var text = $("#todo").val();
+            if (text != null) {
+                localStorage.text = text;
+                @home.EndTimer("TeDoen", User.Identity.Name)
+            }
+
+        }
+    </script>
+
+}

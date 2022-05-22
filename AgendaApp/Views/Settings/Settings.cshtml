@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Instellingen";
+}
+
+<div class="text-center container instructies ">
+
+    <div class="account-title row">
+        <div class="col-4">
+            <h1>Je account</h1>
+        </div>
+        <div class="col-8 calendar-buttons">
+            <div class="font-buttons font-buttons-instructies">
+                <button id="font-normal" title="Kleine tekst" style="font-size:1rem" onclick="updateFont('font-size-normal', 'font-normal')">A</button>
+                <button id="font-larger" title="Normale tekst" style="font-size:1.5rem" class="font-size-normal" onclick="updateFont('font-size-larger', 'font-larger')">A</button>
+                <button id="font-largest" title="Grote tekst" style="font-size:2rem" class="font-size-normal" onclick="updateFont('font-size-largest', 'font-largest')">A</button>
+            </div>
+        </div>
+    </div>
+    <div class="account-page">
+        <p>@User.Identity.Name</p>
+
+        <partial name="_LoginPartial" />
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            var id = localStorage.fontId;
+            if (id == null) {
+                window.onload = $('#font-normal').addClass("selected");
+            } else {
+                window.onload = $(`#${id}`).addClass("selected");
+            }
+            window.onload = $('body').addClass(localStorage.bodyClass);
+        });
+        function updateFont(name, id) {
+            $('body').removeClass('font-size-larger font-size-normal font-size-largest');
+            $('body').addClass(name);
+            $('button').removeClass("selected");
+            localStorage.bodyClass = name;
+            localStorage.fontId = id;
+            $(`#${id}`).addClass("selected");
+        }
+    </script>
+}

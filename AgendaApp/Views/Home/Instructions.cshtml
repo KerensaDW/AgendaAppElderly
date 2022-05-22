@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Instructies";
+    var timer1 = "MaakDoel";
+    var timer2 = "TeDoen";
+    var timer3 = "EditDoel";
+    var timer4 = "VerwijderDoel";
+    var timer5 = "Logout";
+}
+<div class="container instructies row">
+    <div class="col-4">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-8 calendar-buttons">
+        <div class="font-buttons font-buttons-instructies">
+            <button id="font-normal" title="Kleine tekst" style="font-size:1rem" onclick="updateFont('font-size-normal', 'font-normal')">A</button>
+            <button id="font-larger" title="Normale tekst" style="font-size:1.5rem" class="font-size-normal" onclick="updateFont('font-size-larger', 'font-larger')">A</button>
+            <button id="font-largest" title="Grote tekst" style="font-size:2rem" class="font-size-normal" onclick="updateFont('font-size-largest', 'font-largest')">A</button>
+        </div>
+    </div>
+    <div class="instructies-form">
+        <form method="post" class="algemeenForm">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Taak 1: Maak het gevraagde doel "Sporten" aan.</td>
+                        <td><button class="btn btn-success" title="Maak het doel" type="submit" asp-action="CreateTimer" asp-route-naam="@timer1">Start!</button></td>
+                    </tr>
+                    <tr>
+                        <td>Taak 2: Voeg de gevraagde "te doen" taakjes toe.</td>
+                        <td><button class="btn btn-success" title="Voeg de taakjes toe" type="submit" asp-action="CreateTimer" asp-route-naam="@timer2">Start!</button></td>
+                    </tr>
+                    <tr>
+                        <td>Taak 3: Bewerk het doel "Sporten" door een extra dag aan te duiden.</td>
+                        <td><button class="btn btn-success" title="Bewerk het doel" type="submit" asp-action="CreateTimer" asp-route-naam="@timer3">Start!</button></td>
+                    </tr>
+                    <tr>
+                        <td>Taak 4: Verwijder het doel "Sporten".</td>
+                        <td><button class="btn btn-success" title="Verwijder het doel" type="submit" asp-action="CreateTimer" asp-route-naam="@timer4">Start!</button></td>
+                    </tr>
+                    <tr>
+                        <td>Taak 5: Log uit.</td>
+                        <td><button class="btn btn-success" title="Log uit" type="submit" asp-action="CreateTimer" asp-route-naam="@timer5">Start!</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            var id = localStorage.fontId;
+            if (id == null) {
+                window.onload = $('#font-normal').addClass("selected");
+            } else {
+                window.onload = $(`#${id}`).addClass("selected");
+            }
+            
+            window.onload = $('body').addClass(localStorage.bodyClass);
+        });
+        function updateFont(name, id) {
+            $('body').removeClass('font-size-larger font-size-normal font-size-largest');
+            $('body').addClass(name);
+            $('button').removeClass("selected");
+            localStorage.bodyClass = name;
+            localStorage.fontId = id;
+            $(`#${id}`).addClass("selected");
+        }
+    </script>
+}

@@ -1,0 +1,87 @@
+﻿@model AgendaApp.Models.ViewModels.DoelEditViewModel
+
+@{ ViewData["Title"] = "Doel bewerken";
+    var dates = new List<string> { "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag" };
+}
+<div class="modal-body">
+    @using (Html.BeginForm("EditDoel", "Home", FormMethod.Post, Model.Id))
+    {
+        <h2 class="algemeenForm">@ViewData["Title"]</h2>
+
+        @*<form method="post" class="algemeenForm">*@
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+
+        <div class="form-group modal-body container">
+
+            <div class="name-color">
+                <label asp-for="Naam">Naam van het doel:</label>
+                <label class="kleurlabel" asp-for="Kleur">Kleur van het doel:</label>
+            </div>
+            <div class="name-color">
+                <input asp-for="Naam" placeholder="Naam" />
+                <select asp-for="Kleur" class="form-control colorselect" id="groupSel">
+                    <option class="blue" value="blue" selected>Blauw</option>
+                    <option class="green" value="green">Groen</option>
+                    <option class="yellow" value="yellow">Geel</option>
+                    <option class="red" value="red">Rood</option>
+                </select>
+            </div>
+            <div class="form-group dates">
+                <label class="dates-label" asp-for="Dates"></label>
+                <div class="dates-dates">
+                    @foreach (var date in dates)
+                    {
+                        <div class="date">
+                            <input type="checkbox" id="@date" name="dates" value="@date" @(Model.Dates.Contains(date) ? "checked" : "")>
+                            <label for="@date">@date</label>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!--<div class="form-group">
+    <label asp-for="Dates"></label>
+    <select asp-for="Dates" class="form-control" id="groupSel">-->
+            @*<option value="" disabled>-- selecteer startdag --</option> handig voor elderlywebsite*@
+            <!--<option value="1">Maandag</option>
+            <option value="2">Dinsdag</option>
+            <option value="3">Woensdag</option>
+        </select>
+        <span asp-validation-for="Dates" class="text-danger"></span>
+    </div>-->
+
+            <div class="doel-buttons">
+                <button id="terugbutton-edit" type="button" class="btn button-outline"
+                        data-dismiss="modal" title="Sla het gewijzigde doel niet op">
+                    Annuleren
+                </button>
+                <div>
+                    @*<button id="delete-btn" class="btn btn-danger" type="submit" asp-action="Delete" asp-route-id="@Model.Id">Doel verwijderen</button>*@
+                    <button id="delete-btn-question" style="visibility:visible;" title="Verwijder het doel" class="btn btn-danger" type="button" onclick="Delete()">Doel verwijderen</button>
+                    <button id="approve-edit-btn" class="btn btn-success" title="Sla het gewijzigde doel op" type="submit" asp-action="EditDoel" asp-route-id="@Model.Id">Doel bewerken</button>
+                </div>
+            </div>
+            <div id="delete-doel" style="display:none;">
+                <br />
+                <p>Weet u zeker dat u dit doel wilt verwijderen?</p>
+                <button id="terugbutton-edit" type="button" class="btn button-outline" title="Het doel niet verwijderen"
+                        data-dismiss="modal">
+                    Niet verwijderen
+                </button>
+                <button id="delete-btn" class="btn btn-danger" title="Verwijder het doel" type="submit" asp-action="Delete" asp-route-id="@Model.Id">Doel verwijderen</button>
+
+            </div>
+        </div>
+    }
+</div>
+@*</form>*@
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script type="text/javascript">
+    function Delete() {
+        document.getElementById('delete-btn-question').style.visibility = "hidden";
+        document.getElementById('delete-doel').style.display = "inline-block";
+    }
+</script>

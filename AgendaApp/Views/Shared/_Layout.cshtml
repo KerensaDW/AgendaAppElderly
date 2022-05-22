@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Gebruiker> SignInManager
+@inject UserManager<Gebruiker> UserManager
+@{ 
+    var url = Context.Request.Path;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Agendoel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/elderlysite.css" /> @*change the css file accordingly*@
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm ">
+            @*  *@
+            <div class="container">
+                <a class="navbar-brand" >Agendoel</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item @(url.ToString().Contains("Index")? "nav-item--active" : "")">
+                            <a class="nav-link" title="Ga naar agenda" asp-area="" asp-controller="Home" asp-action="Index">Agenda</a>
+                        </li>
+
+                        <li class="nav-item @(url.ToString().Contains("Settings")? "nav-item--active" : "") profiel-nav-link">
+                            <a class="nav-link" title="Ga naar uitloggen" asp-area="" asp-controller="Settings" asp-action="Settings">Mijn profiel</a>
+                        </li>
+
+                        <li class="nav-item @(!url.ToString().Contains("Index") && !url.ToString().Contains("Settings")? "nav-item--active" : "") instructies-nav-item">
+                            <a class="nav-link" title="Ga naar instructies" asp-area="" asp-controller="Home" asp-action="Instructions">Instructies</a>
+                        </li>
+                    </ul>
+                    }
+
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="maincontainer">
+
+        <main id="main" role="main" class="pb-3">
+            <div id="alerts">
+                    @if (TempData["message"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["message"]</div>}
+                    @if (TempData["error"] != null)
+                    {
+                        <div class="alert alert-warning">@TempData["error"]</div>}
+                </div>
+            @RenderBody()
+        </main>
+
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - Agendoel - <a href="mailto:dewinterkerensa@gmail.com">Contacteer mij</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+            setTimeout(() => {
+                const alerts = document.getElementById('alerts');
+                alerts.style.display = 'none';
+            }, 2000);
+        </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿@using System.Globalization
+@using AgendaApp.Models.ViewModels
+@inject IDoelRepository doelRepo
+@{
+    DateTime startOfWeek = DateTime.Today.AddDays(
+     (int)CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek -
+     (int)DateTime.Today.DayOfWeek);
+    var doelen = doelRepo.GetAllByGebruiker(User.Identity.Name);
+    var agendaDateTime = new List<DateTime> {
+        startOfWeek,
+        startOfWeek.AddDays(1),
+        startOfWeek.AddDays(2),
+        startOfWeek.AddDays(3),
+        startOfWeek.AddDays(4),
+        startOfWeek.AddDays(5),
+        startOfWeek.AddDays(6),
+    };
+    IEnumerable<string> agenda = agendaDateTime.Select(x => x.ToString("dddd dd/MM"));
+    IEnumerable<string> agendaDagen = agendaDateTime.Select(x => x.ToString("dddd"));
+    var clickeddevm = new DoelEditViewModel();
+    ViewData["devm"] = clickeddevm;
+}
+
+<div class="weekgrid">
+    @foreach (var dag in agenda)
+    {
+        <div class="dagkolom">
+            <p class="dag">@dag</p>
+            @foreach (var doel in doelen)
+            {
+                if (doel.Dates.ToLower().Split(",").Contains(dag.Split(" ").First()))
+                {
+                    <div class="@doel.Kleur.ToLower()">
+                        @Html.ActionLink(doel.Naam, "ViewEditDoel", "Home",
+                        new { id = doel.Id }, new { @class = "modal-link-edit", @title = "Doel bewerken" })
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+@section Scripts {
+<script type="text/javascript">
+    $(function () {
+        $('body').on('click', '.modal-link-edit', function (e) {
+            e.preventDefault();
+            $(this).attr('data-target', '#modal-container-edit');
+            $(this).attr('data-toggle', 'modal');
+        });
+        $('body').on('click', '.modal-close-btn', function () {
+            $('#modal-container-edit').modal('hide');
+        });
+    });
+</script>
+}

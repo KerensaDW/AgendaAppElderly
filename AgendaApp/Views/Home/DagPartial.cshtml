@@ -1,0 +1,39 @@
+﻿@inject IDoelRepository doelRepo
+@using AgendaApp.Models.ViewModels
+@{
+    string vandaag = DateTime.Today.ToString("dddd dd/MM");
+    var doelen = doelRepo.GetAllByGebruiker(User.Identity.Name);
+    ViewData["agenda"] = "dag";
+}
+
+<div class="dagblok dagkolom">
+    <p class="dag">@vandaag</p>
+    @foreach (var doel in doelen)
+    {
+        if (doel.Dates.ToLower().Split(",").Contains(vandaag.Split(" ").First()))
+        {
+            <div class="@doel.Kleur.ToLower()">
+                @Html.ActionLink(doel.Naam, "ViewEditDoel", "Home",
+                new { id = doel.Id }, new { @class = "modal-link-edit", @title = "Doel bewerken" })
+                
+            </div>
+        }
+    }
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+
+            $('body').on('click', '.modal-link-edit', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-container-edit');
+                $(this).attr('data-toggle', 'modal');
+            });
+            $('body').on('click', '.modal-close-btn', function () {
+                $('#modal-container-edit').modal('hide');
+            });
+        });
+    </script>
+}

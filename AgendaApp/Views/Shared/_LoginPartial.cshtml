@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AgendaApp.Controllers
+@inject SignInManager<Gebruiker> SignInManager
+@inject UserManager<Gebruiker> UserManager
+@inject HomeController home 
+
+        @*<li class="nav-item">
+                <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hallo @User.Identity.Name!</a>
+            </li>*@
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Instructions", "Home", new { area = "" })">
+                <button id="" title="Log uit" type="submit" class="btn-primary uitlogknop" onclick="@home.EndTimer("Logout", User.Identity.Name)">Uitloggen</button>
+            </form>
+
+
